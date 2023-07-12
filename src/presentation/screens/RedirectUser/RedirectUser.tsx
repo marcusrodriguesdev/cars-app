@@ -10,9 +10,23 @@ const RedirectUser: React.FC = () => {
       const name = await AsyncStorage.getItem('userName');
 
       if (name) {
-        return navigation.navigate('Home' as never);
+        return navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'Home' as never,
+            },
+          ],
+        });
       } else {
-        return navigation.navigate('SignIn' as never);
+        return navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'SignIn' as never,
+            },
+          ],
+        });
       }
     };
 
