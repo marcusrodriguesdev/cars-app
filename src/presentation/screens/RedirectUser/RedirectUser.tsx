@@ -6,17 +6,17 @@ const RedirectUser: React.FC = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem('token');
+    const checkName = async () => {
+      const name = await AsyncStorage.getItem('userName');
 
-      if (token) {
+      if (name) {
         return navigation.navigate('Home' as never);
       } else {
         return navigation.navigate('SignIn' as never);
       }
     };
 
-    checkToken();
+    checkName();
   }, []);
 
   return null;

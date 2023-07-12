@@ -24,7 +24,7 @@ const SignIn: React.FC = () => {
       return Alert.alert('Erro', 'Usuário e/ou senha inválido(s).');
     }
 
-    await AsyncStorage.setItem('token', response.user.token);
+    await AsyncStorage.setItem('userName', response.user.name);
     updateUser(response.user);
 
     return navigation.navigate('Home' as never);
