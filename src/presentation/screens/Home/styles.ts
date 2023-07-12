@@ -28,6 +28,7 @@ export const Title = styled.Text`
 
 export const TextContainer = styled.View`
   padding-horizontal: 24px;
+  margin-bottom: 20px;
 `;
 
 export const Subtitle = styled.Text`
@@ -39,13 +40,13 @@ export const Subtitle = styled.Text`
 `;
 
 export const CarBox = styled.TouchableOpacity`
-  background-color: #fff;
+  background-color: #a8a8b3;
   border-radius: 10px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 16px 24px;
-  padding: 20px;
+  padding: 16px;
 `;
 
 export const CarName = styled.Text`

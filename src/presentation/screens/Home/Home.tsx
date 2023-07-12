@@ -1,4 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { StatusBar, Text, TouchableOpacity } from 'react-native';
+import { UserContext } from '../../context/userContext';
+import { CarsService } from '../../../services/CarsService';
+import { GetMarksResponse } from '../../../services/CarsService/ICarsService';
+import { Input } from '../../components';
 import {
   BackIcon,
   CarBox,
@@ -10,12 +17,6 @@ import {
   TextContainer,
   Title,
 } from './styles';
-import { StatusBar, Text, TouchableOpacity } from 'react-native';
-import { UserContext } from '../../context/userContext';
-import { CarsService } from '../../../services/CarsService';
-import { GetMarksResponse } from '../../../services/CarsService/ICarsService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
 const backIcon = require('../../assets/back-icon.png');
 const chevronRight = require('../../assets/chevron-right.png');
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
 
   const [userName, setUserName] = useState<string>('');
   const [cars, setCars] = useState<GetMarksResponse[] | null>(null);
+  const [searchText, setSearchText] = useState<string>('');
 
   const handleExitApp = async () => {
     await AsyncStorage.removeItem('userName');
@@ -41,6 +43,10 @@ const Home: React.FC = () => {
 
   const handleSelectModel = (model: string, name: string) => {
     navigation.navigate('Model', { model, name });
+  };
+
+  const handleSearch = (text: string) => {
+    setSearchText(text);
   };
 
   useEffect(() => {
@@ -65,6 +71,10 @@ const Home: React.FC = () => {
     getMarks();
   }, []);
 
+  const filteredCars = cars?.filter((car) =>
+    car.nome.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <Container>
       <StatusBar barStyle="dark-content" />
@@ -77,8 +87,14 @@ const Home: React.FC = () => {
       <TextContainer>
         <Title>Bem vindo, {userName || 'john'}!</Title>
         <Subtitle>Aqui está a lista das melhores marcas de carro do mundo!</Subtitle>
+        <Input
+          onChangeText={handleSearch}
+          placeholder="Digite uma marca desejeda"
+          secureText={false}
+          value={searchText}
+        />
       </TextContainer>
-      {cars?.map((car) => (
+      {filteredCars?.map((car) => (
         <CarBox onPress={() => handleSelectModel(car.codigo, car.nome)}>
           <CarName>{car.nome}</CarName>
           <ChevronRight source={chevronRight} />
