@@ -1,18 +1,33 @@
-import React from 'react';
-import { Keyboard, StatusBar } from 'react-native';
-import { ButtonContainer, Container, ImageStyled, InputContainer, Subtitle, Title } from './styles';
+import React, { useContext } from 'react';
+import { Alert, Keyboard, StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Input } from '../../components';
 import { SignInFormData } from '../../types/signIn';
+import { SignInService } from '../../../services/SignInService';
+import { UserContext } from '../../context/userContext';
+import { Button, Input } from '../../components';
+import { ButtonContainer, Container, ImageStyled, InputContainer, Subtitle, Title } from './styles';
 
 const logo = require('../../assets/carHome.png');
 
 const SignIn: React.FC = () => {
   const { control, handleSubmit, formState } = useForm<SignInFormData>();
+  const navigation = useNavigation();
+  const { updateUser } = useContext(UserContext);
 
-  const onSubmit = (data: SignInFormData) => {
-    // Processar os dados do formulário
-    console.log(data);
+  const onSubmit = async (data: SignInFormData) => {
+    const { username, password } = data;
+
+    const response: any = await new SignInService().signIn(username, password);
+    if (response.error) {
+      return Alert.alert('Erro', 'Usuário e/ou senha inválido(s).');
+    }
+
+    await AsyncStorage.setItem('token', response.user.token);
+    updateUser(response.user);
+
+    return navigation.navigate('Home' as never);
   };
 
   return (
