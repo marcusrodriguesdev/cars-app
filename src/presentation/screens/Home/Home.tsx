@@ -39,8 +39,8 @@ const Home: React.FC = () => {
     });
   };
 
-  const handleSelectModel = (model: string) => {
-    navigation.navigate('Model', { model });
+  const handleSelectModel = (model: string, name: string) => {
+    navigation.navigate('Model', { model, name });
   };
 
   useEffect(() => {
@@ -76,11 +76,10 @@ const Home: React.FC = () => {
       </Header>
       <TextContainer>
         <Title>Bem vindo, {userName || 'john'}!</Title>
-
         <Subtitle>Aqui está a lista das melhores marcas de carro do mundo!</Subtitle>
       </TextContainer>
       {cars?.map((car) => (
-        <CarBox onPress={() => handleSelectModel(car.codigo)}>
+        <CarBox onPress={() => handleSelectModel(car.codigo, car.nome)}>
           <CarName>{car.nome}</CarName>
           <ChevronRight source={chevronRight} />
         </CarBox>
