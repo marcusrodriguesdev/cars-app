@@ -8,3 +8,12 @@ export const clientSignIn: AxiosInstance = axios.create({
   },
   timeout: 1000,
 });
+
+
+export const clientCars: AxiosInstance = axios.create({
+  baseURL: 'https://parallelum.com.br/fipe/api/v1/carros/marcas',
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+})
