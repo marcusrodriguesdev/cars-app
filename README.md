@@ -25,7 +25,9 @@ O aplicativo consiste em mostrar uma lista de marcas de carro, podendo acessar u
 # 📱 Demonstração da Aplicação
 
 <p align="center">
-  
+
+https://github.com/marcusrodriguesdev/cars-app/assets/81593777/882a712e-6a28-49f8-a3e3-1ea0e5ce9e8d
+
 </p>
 
 # 🚀 Meus Passos
@@ -53,9 +55,9 @@ As seguintes ferramentas foram usadas na construção do projeto:
 Para logar no app usar o seguintes dados:
 
 ```bash
-email: marcus@quesh.ia
+user: test
 
-senha: 12345
+senha: 1234
 ```
 
 # 🚀 Como rodar o projeto
