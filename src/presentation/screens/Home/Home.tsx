@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { StatusBar, Text, TouchableOpacity } from 'react-native';
+import { FlatList, StatusBar, Text, TouchableOpacity } from 'react-native';
 import { UserContext } from '../../context/userContext';
 import { CarsService } from '../../../services/CarsService';
 import { GetMarksResponse } from '../../../services/CarsService/ICarsService';
@@ -75,6 +75,13 @@ const Home: React.FC = () => {
     car.nome.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  const renderItem = ({ item }: { item: GetMarksResponse }) => (
+    <CarBox onPress={() => handleSelectModel(item.codigo, item.nome)}>
+      <CarName>{item.nome}</CarName>
+      <ChevronRight source={chevronRight} />
+    </CarBox>
+  );
+
   return (
     <Container>
       <StatusBar barStyle="dark-content" />
@@ -94,12 +101,7 @@ const Home: React.FC = () => {
           value={searchText}
         />
       </TextContainer>
-      {filteredCars?.map((car) => (
-        <CarBox onPress={() => handleSelectModel(car.codigo, car.nome)}>
-          <CarName>{car.nome}</CarName>
-          <ChevronRight source={chevronRight} />
-        </CarBox>
-      ))}
+      <FlatList data={filteredCars} renderItem={renderItem} keyExtractor={(item) => item.codigo} />
     </Container>
   );
 };

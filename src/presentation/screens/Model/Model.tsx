@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { CarBox, CarName, ChevronLeft, Container, Header, TextContainer, Title } from './styles';
-import { StatusBar, TouchableOpacity } from 'react-native';
+import { FlatList, StatusBar, TouchableOpacity } from 'react-native';
 import { CarsService } from '../../../services/CarsService';
 import { useNavigation } from '@react-navigation/native';
+import { GetMarksResponse } from '../../../services/CarsService/ICarsService';
 
 const chevronLeft = require('../../assets/chevron-left.png');
 
@@ -20,6 +21,12 @@ const Model: React.FC = ({ route }: any) => {
     getModels();
   }, []);
 
+  const renderItem = ({ item }: { item: GetMarksResponse }) => (
+    <CarBox>
+      <CarName>{item.nome}</CarName>
+    </CarBox>
+  );
+
   return (
     <Container>
       <StatusBar barStyle="light-content" />
@@ -31,11 +38,7 @@ const Model: React.FC = ({ route }: any) => {
       <TextContainer>
         <Title>Estes são os principais modelos de "{route.params.name}".</Title>
       </TextContainer>
-      {models?.modelos.map((model: any) => (
-        <CarBox>
-          <CarName>{model.nome}</CarName>
-        </CarBox>
-      ))}
+      <FlatList data={models?.modelos} renderItem={renderItem} keyExtractor={(item) => item.codigo} />
     </Container>
   );
 };

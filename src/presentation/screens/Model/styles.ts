@@ -32,13 +32,13 @@ export const ChevronLeft = styled.Image`
 `;
 
 export const CarBox = styled.View`
-  background-color: #fff;
+  background-color: #a8a8b3;
   border-radius: 10px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 16px 24px;
-  padding: 20px;
+  padding: 16px;
 `;
 
 export const CarName = styled.Text`
